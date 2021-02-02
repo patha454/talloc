@@ -1,3 +1,5 @@
-int talloc_main(void) {
-    return 1;
+int
+talloc_main(void)
+{
+  return 1;
 }
