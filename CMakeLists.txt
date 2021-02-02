@@ -9,6 +9,8 @@ project(
   LANGUAGES C
 )
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_library(talloc SHARED
     ${PROJECT_SOURCE_DIR}/talloc.c
 )
