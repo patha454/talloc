@@ -12,8 +12,12 @@ project(
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(talloc SHARED
+    ${PROJECT_SOURCE_DIR}/binary-tree.c
+    ${PROJECT_SOURCE_DIR}/src/status.c
     ${PROJECT_SOURCE_DIR}/talloc.c
 )
+
+target_include_directories(talloc PRIVATE include)
 
 set(TARGET talloc PROPERTY C_STANDARD 99)
 
