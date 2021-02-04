@@ -11,6 +11,9 @@ project(
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(CTest)
+include(CPack)
+
 add_library(talloc SHARED
     ${PROJECT_SOURCE_DIR}/src/binary-tree.c
     ${PROJECT_SOURCE_DIR}/src/status.c
@@ -29,6 +32,24 @@ target_compile_options(
     "SHELL:-pedantic"
 )
 
+add_executable(talloc_unit_tests
+    ${PROJECT_SOURCE_DIR}/tests/status.c
+)
+
+find_package(cmocka REQUIRED)
+
+target_include_directories(talloc_unit_tests PRIVATE
+    include
+    ${CMOCKA_INCLUDE_DIR}
+)
+
+target_link_libraries(talloc_unit_tests
+    talloc
+    ${CMOCKA_LIBRARY}
+)
+
+add_test(NAME talloc_unit_test COMMAND talloc_unit_tests)
+
 set(CPACK_PACKAGE_VENDOR "H Paterson")
 set(CPACK_PACKAGE_CONTACT "H Paterson <harley.paterson@postgrad.otago.ac.nz>")
 set(CPACK_PACKAGE_DESCRIPTION "Experimental tracking allocator.")
@@ -37,4 +58,3 @@ set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-include(CPack)

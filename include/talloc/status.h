@@ -13,14 +13,32 @@
 enum TkStatus
 {
   /** Request successfully handled. */
-  TK_SUCCSSS,
+  TK_SUCCESS = 0,
 
   /** Out of memory. */
-  TK_ERROR_NOMEM,
+  TK_ERROR_NOMEM = 1,
 
   /** Unexpected runtime situation. */
-  TK_ERROR_PANIC,
+  TK_ERROR_PANIC = 2,
 
   /** Generic, or otherwise unspecified error. */
-  TK_ERROR_GENERIC,
+  TK_ERROR_GENERIC = 3,
 };
+
+/**
+ * Fetch a human readable description associated with a status code.
+ *
+ * \param status The status code to query.
+ * \return A short, human readable status description.
+ */
+const char*
+tkStatusDescription(const enum TkStatus status);
+
+/**
+ * Fetch a human readable label associated with a status code.
+ *
+ * \param status The status code to query.
+ * \return A short, human readable status label.
+ */
+const char*
+tkStatusLabel(const enum TkStatus status);
