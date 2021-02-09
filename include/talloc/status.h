@@ -23,7 +23,14 @@ enum TkStatus
 
   /** Generic, or otherwise unspecified error. */
   TK_ERROR_GENERIC = 3,
-};
+} TkStatus;
+
+/**
+ * Test if a value is an error status code.
+ *
+ * \param x Status code to test.
+ */
+#define IS_ERROR(x) ((enum TkStatus) (x) != TK_SUCCESS)
 
 /**
  * Fetch a human readable description associated with a status code.

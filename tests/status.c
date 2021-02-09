@@ -50,6 +50,14 @@ testTkStatusDescriptionInvalid(void** state)
     "<unknown status - this is probably a bug in error handling code.");
 }
 
+/** Test `IS_ERROR` macro under normal conditions. */
+static void
+testTkStatusIsErrorNormal(void** state)
+{
+  assert_true(IS_ERROR(TK_ERROR_GENERIC));
+  assert_false(IS_ERROR(TK_SUCCESS));
+}
+
 /** Test the `src/status.c` complation unit. */
 int
 main(void)
@@ -58,7 +66,8 @@ main(void)
     cmocka_unit_test(testTkStatusLabelNormal),
     cmocka_unit_test(testTKStatusLabelInvalid),
     cmocka_unit_test(testTkStatusDescriptionNormal),
-    cmocka_unit_test(testTkStatusDescriptionInvalid)
+    cmocka_unit_test(testTkStatusDescriptionInvalid),
+    cmocka_unit_test(testTkStatusIsErrorNormal)
   };
   return cmocka_run_group_tests(tests, NULL, NULL);
 }
