@@ -9,6 +9,9 @@
  * \date Feburary 2021.
  */
 
+#ifndef TALLOC_STATUS_H_
+#define TALLOC_STATUS_H_
+
 /** `TkStatus` indicates the success or otherwise of allocator operations. */
 enum TkStatus
 {
@@ -21,16 +24,19 @@ enum TkStatus
   /** Unexpected runtime situation. */
   TK_ERROR_PANIC = 2,
 
+  /** Invalid or unexpected data type. */
+  TK_ERROR_TYPE = 3,
+
   /** Generic, or otherwise unspecified error. */
-  TK_ERROR_GENERIC = 3,
-} TkStatus;
+  TK_ERROR_GENERIC = 4,
+};
 
 /**
  * Test if a value is an error status code.
  *
  * \param x Status code to test.
  */
-#define IS_ERROR(x) ((enum TkStatus) (x) != TK_SUCCESS)
+#define IS_ERROR(x) ((enum TkStatus)(x) != TK_SUCCESS)
 
 /**
  * Fetch a human readable description associated with a status code.
@@ -39,7 +45,7 @@ enum TkStatus
  * \return A short, human readable status description.
  */
 const char*
-tkStatusDescription(const enum TkStatus status);
+tkStatusDescription(enum TkStatus status);
 
 /**
  * Fetch a human readable label associated with a status code.
@@ -48,4 +54,6 @@ tkStatusDescription(const enum TkStatus status);
  * \return A short, human readable status label.
  */
 const char*
-tkStatusLabel(const enum TkStatus status);
+tkStatusLabel(enum TkStatus status);
+
+#endif

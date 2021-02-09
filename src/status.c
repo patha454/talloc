@@ -32,6 +32,7 @@ static const struct TkStatusString tkStatusStrings[] = {
   { TK_SUCCESS, "TK_SUCCESS", "Operation completed successfully" },
   { TK_ERROR_NOMEM, "TK_ERROR_NOMEM", "Out of memory" },
   { TK_ERROR_PANIC, "TK_ERROR_PANIC", "Unexpected runtime condition" },
+  { TK_ERROR_TYPE, "TK_ERROR_TYPE", "Invalid data type" },
   { TK_ERROR_GENERIC, "TK_ERROR_GENERIC", "Unknown error" }
 };
 

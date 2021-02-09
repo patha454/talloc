@@ -3,53 +3,87 @@
  *
  * `binary-tree.c` implements a generic binary tree.
  *
+ * \see `include/talloc/binary-tree.h` for detailed doccomments and API
+ * documentation.
+ *
  * \author H Paterson <harley.paterson@postgrad.otago.ac.nz>.
  * \copyright BSL-1.0.
  * \date Feburary 2021.
  */
 
+#include "talloc/binary-tree.h"
+#include <assert.h>
 #include <stdlib.h>
 
-/**
- * \struct TkBinaryTree
- *
- * `TkBinaryTree` stores the context for a binary tree.
- */
+/** Magic number for binary tree types. */
+#define TK_BINARY_TREE_MAGIC 0x70DDB44356EB38AF
+
+/** Internal implementaiton context for a binary tree. */
 struct TkBinaryTree
 {
-  /** The root node of the tree stored. */
-  struct TkBinaryTreeNode* root;
+  /** Magic number confirms this is a binary tree. */
+  size_t magic;
 };
 
-typedef struct TkBinaryTree* TkBinaryTree;
-
-/**
- * \struct TkBinaryTreeNode represents a binary tree node.
- *
- * `TkBinaryTreeNode`s are internal state to a binary tree.
- * `TkBinaryTreeNodes`s should not be used directly. Instead, see
- * `struct TkBinaryTree`'s helper methods.
- */
-struct TkBinaryTreeNode
+enum TkStatus
+tkBinaryTreeCreate(TkBinaryTree* binaryTree)
 {
-  /** The object stored in the tree node, or NULL if empty. */
-  void* node;
+  assert(binaryTree != NULL);
+  struct TkBinaryTree* newTree = malloc(sizeof *newTree);
+  if (newTree == NULL) {
+    *binaryTree = NULL;
+    return TK_ERROR_NOMEM;
+  }
+  newTree->magic = TK_BINARY_TREE_MAGIC;
+  *binaryTree = newTree;
+  return TK_SUCCESS;
+}
 
-  /** The left-branch of the tree, or NULL if there is no such branch. */
-  struct TkBinaryTreeNode* left;
-
-  /** The right-branch of the tree, or NULL if there is no such branch. */
-  struct TkBinaryTreeNode* right;
-};
-
-typedef struct TkBinaryTreeNode* TkBinaryTreeNode;
-
-TkBinaryTreeNode
-tkNewBinaryTreeNode()
+enum TkStatus
+tkBinaryTreeCreateContainer(TkContainer* container)
 {
-  TkBinaryTreeNode node = malloc(sizeof(struct TkBinaryTreeNode));
-  node->left = NULL;
-  node->right = NULL;
-  node->node = NULL;
-  return node;
+  assert(container != NULL);
+  enum TkStatus status = TK_SUCCESS;
+  struct TkContainer* newContainer = malloc(sizeof *newContainer);
+  if (newContainer == NULL) {
+    return TK_ERROR_NOMEM;
+  }
+  status = tkBinaryTreeCreate((TkBinaryTree*)&newContainer->context);
+  if (IS_ERROR(status)) {
+    tkBinaryTreeDestroyContainer(newContainer);
+    return status;
+  }
+  newContainer->get = NULL;
+  newContainer->set = NULL;
+  *container = newContainer;
+  return TK_SUCCESS;
+}
+
+enum TkStatus
+tkBinaryTreeDestroyContainer(TkContainer container)
+{
+  enum TkStatus status = TK_SUCCESS;
+  assert(container != NULL);
+  if (container->context != NULL) {
+    status = tkBinaryTreeDestroy(container->context);
+    if (IS_ERROR(status)) {
+      return status;
+    }
+  }
+  container->context = NULL;
+  container->get = NULL;
+  container->set = NULL;
+  free(container);
+  return TK_SUCCESS;
+}
+
+enum TkStatus
+tkBinaryTreeDestroy(TkBinaryTree binaryTree)
+{
+  assert(binaryTree != NULL);
+  if (binaryTree->magic != TK_BINARY_TREE_MAGIC) {
+    return TK_ERROR_TYPE;
+  }
+  free(binaryTree);
+  return TK_SUCCESS;
 }

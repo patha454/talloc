@@ -19,7 +19,7 @@
 
 /** Test `tkStatusLabel` under normal conditions. */
 static void
-testTkStatusLabelNormal(void** state)
+testTkStatusLabelNormal(void** state) /* NOLINT */
 {
   assert_string_equal(tkStatusLabel(TK_SUCCESS), "TK_SUCCESS");
   assert_string_equal(tkStatusLabel(TK_ERROR_PANIC), "TK_ERROR_PANIC");
@@ -27,14 +27,14 @@ testTkStatusLabelNormal(void** state)
 
 /** Test `tkStatusStatusLabelAbnormal` with an invalid parameter. */
 static void
-testTKStatusLabelInvalid(void** state)
+testTKStatusLabelInvalid(void** state) /* NOLINT */
 {
   assert_string_equal(tkStatusLabel(-1), "<unknown status>");
 }
 
 /** Test `tkStatusDescription under normal conditions. */
 static void
-testTkStatusDescriptionNormal(void** state)
+testTkStatusDescriptionNormal(void** state) /* NOLINT */
 {
   assert_string_equal(tkStatusDescription(TK_SUCCESS),
                       "Operation completed successfully");
@@ -43,7 +43,7 @@ testTkStatusDescriptionNormal(void** state)
 
 /** Test `tkStatusDescription` with an invalid parameter. */
 static void
-testTkStatusDescriptionInvalid(void** state)
+testTkStatusDescriptionInvalid(void** state) /* NOLINT */
 {
   assert_string_equal(
     tkStatusDescription(-1),
@@ -52,7 +52,7 @@ testTkStatusDescriptionInvalid(void** state)
 
 /** Test `IS_ERROR` macro under normal conditions. */
 static void
-testTkStatusIsErrorNormal(void** state)
+testTkStatusIsErrorNormal(void** state) /* NOLINT */
 {
   assert_true(IS_ERROR(TK_ERROR_GENERIC));
   assert_false(IS_ERROR(TK_SUCCESS));

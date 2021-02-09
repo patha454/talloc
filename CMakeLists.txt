@@ -32,23 +32,38 @@ target_compile_options(
     "SHELL:-pedantic"
 )
 
-add_executable(talloc_unit_tests
+add_executable(talloc_unit_tests_status
     ${PROJECT_SOURCE_DIR}/tests/status.c
+)
+
+add_executable(talloc_unit_tests_binary_tree
+  ${PROJECT_SOURCE_DIR}/tests/binary-tree.c
 )
 
 find_package(cmocka REQUIRED)
 
-target_include_directories(talloc_unit_tests PRIVATE
+target_include_directories(talloc_unit_tests_status PRIVATE
     include
     ${CMOCKA_INCLUDE_DIR}
 )
 
-target_link_libraries(talloc_unit_tests
+target_include_directories(talloc_unit_tests_binary_tree PRIVATE
+    include
+    ${CMOCKA_INCLUDE_DIR}
+)
+
+target_link_libraries(talloc_unit_tests_status
     talloc
     ${CMOCKA_LIBRARY}
 )
 
-add_test(NAME talloc_unit_test COMMAND talloc_unit_tests)
+target_link_libraries(talloc_unit_tests_binary_tree
+    talloc
+    ${CMOCKA_LIBRARY}
+)
+
+add_test(NAME talloc_unit_tests_stats COMMAND talloc_unit_tests_status)
+add_test(NAME talloc_unit_tests_binary_tree COMMAND talloc_unit_tests_binary_tree)
 
 set(CPACK_PACKAGE_VENDOR "H Paterson")
 set(CPACK_PACKAGE_CONTACT "H Paterson <harley.paterson@postgrad.otago.ac.nz>")
