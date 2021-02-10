@@ -18,6 +18,15 @@
 typedef struct TkBinaryTree* TkBinaryTree;
 
 /**
+ * API for functions which compare two elements in a tree.
+ *
+ * \param lhs "Left hand" side to compare.
+ * \param rhh "Right hand" side to compare.
+ * \return 0: `lhs` == `rhs`; negative: `lhs` < `rhs`; positive `lhs` < `rhs`.
+ */
+typedef int (*TkBinaryTreeCompare)(void* lhs, void* rhs);
+
+/**
  * Create a new binary tree.
  *
  * \param binaryTree Location to store a handle to the binary tree.
