@@ -17,6 +17,7 @@ include(CPack)
 add_library(talloc SHARED
     ${PROJECT_SOURCE_DIR}/src/binary-tree.c
     ${PROJECT_SOURCE_DIR}/src/status.c
+    ${PROJECT_SOURCE_DIR}/src/talloc.c
 )
 
 target_include_directories(talloc PRIVATE include)
@@ -31,6 +32,14 @@ target_compile_options(
     "SHELL:-Werror"
     "SHELL:-pedantic"
 )
+
+add_executable(talloc_demo
+    ${PROJECT_SOURCE_DIR}/src/test-main.c
+)
+
+target_include_directories(talloc_demo PRIVATE include)
+
+target_link_libraries(talloc_demo talloc)
 
 add_executable(talloc_unit_tests_status
     ${PROJECT_SOURCE_DIR}/tests/status.c
