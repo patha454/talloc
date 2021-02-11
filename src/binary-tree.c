@@ -53,7 +53,7 @@ struct TkBinaryTree
 enum TkStatus
 tkBinaryTreeNodeCreate(struct TkBinaryTreeNode** node)
 {
-  struct TkBinaryTreeNode* newNode = malloc(sizeof *node);
+  struct TkBinaryTreeNode* newNode = malloc(sizeof *newNode);
   if (newNode == NULL) {
     *node = NULL;
     return TK_ERROR_NOMEM;
@@ -72,7 +72,8 @@ tkBinaryTreeNodeCreate(struct TkBinaryTreeNode** node)
  *
  * \param node Binary tree node to destroy.
  */
-void tkBinaryTreeNodeDestroy(struct TkBinaryTreeNode* node)
+void
+tkBinaryTreeNodeDestroy(struct TkBinaryTreeNode* node)
 {
   assert(node != NULL);
   node->element = NULL;
@@ -92,7 +93,10 @@ void tkBinaryTreeNodeDestroy(struct TkBinaryTreeNode* node)
  * \param comparison Function to determine the ordering of elements.
  * \return `TK_SUCCESS` or an error code on failure.
  */
-enum tkStatus tkBinaryTreeNodeInsert(struct TkBinaryTreeNode* node, void* element, TkBinaryTreeCompare comparision)
+enum TkStatus
+tkBinaryTreeNodeInsert(struct TkBinaryTreeNode* node,
+                       void* element,
+                       TkBinaryTreeCompare comparision)
 {
   assert(node != NULL);
   assert(element != NULL);
@@ -108,16 +112,15 @@ enum tkStatus tkBinaryTreeNodeInsert(struct TkBinaryTreeNode* node, void* elemen
   }
   if (diff < 0) {
     if (node->left == NULL) {
-      status = tkBinaryTreeNodeCreate(node->left);
+      status = tkBinaryTreeNodeCreate(&node->left);
       if (IS_ERROR(status)) {
         return status;
       }
       return tkBinaryTreeNodeInsert(node->left, element, comparision);
     }
-  }
-  else {
+  } else {
     if (node->right == NULL) {
-      status = tkBinaryTreeNodeCreate(node->right);
+      status = tkBinaryTreeNodeCreate(&node->right);
       if (IS_ERROR(status)) {
         return status;
       }
@@ -138,10 +141,11 @@ enum TkStatus
 tkBinaryTreeInsert(TkBinaryTree binaryTree, void* element)
 {
   assert(binaryTree != NULL);
-  return tkBinaryTreeNodeInsert(binaryTree->root, element, binaryTree->comparisionFunction);
+  return tkBinaryTreeNodeInsert(
+    binaryTree->root, element, binaryTree->comparisionFunction);
 }
 
-// TODO... Add tree creation to creato fucntion.
+// TODO(hpaterson)... Add tree creation to creato fucntion.
 
 enum TkStatus
 tkBinaryTreeCreate(TkBinaryTree* binaryTree)
