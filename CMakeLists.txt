@@ -15,8 +15,6 @@ include(CTest)
 include(CPack)
 
 add_library(talloc SHARED
-    ${PROJECT_SOURCE_DIR}/src/binary-tree.c
-    ${PROJECT_SOURCE_DIR}/src/status.c
     ${PROJECT_SOURCE_DIR}/src/talloc.c
 )
 
@@ -40,39 +38,6 @@ add_executable(talloc_demo
 target_include_directories(talloc_demo PRIVATE include)
 
 target_link_libraries(talloc_demo talloc)
-
-add_executable(talloc_unit_tests_status
-    ${PROJECT_SOURCE_DIR}/tests/status.c
-)
-
-add_executable(talloc_unit_tests_binary_tree
-  ${PROJECT_SOURCE_DIR}/tests/binary-tree.c
-)
-
-find_package(cmocka REQUIRED)
-
-target_include_directories(talloc_unit_tests_status PRIVATE
-    include
-    ${CMOCKA_INCLUDE_DIR}
-)
-
-target_include_directories(talloc_unit_tests_binary_tree PRIVATE
-    include
-    ${CMOCKA_INCLUDE_DIR}
-)
-
-target_link_libraries(talloc_unit_tests_status
-    talloc
-    ${CMOCKA_LIBRARY}
-)
-
-target_link_libraries(talloc_unit_tests_binary_tree
-    talloc
-    ${CMOCKA_LIBRARY}
-)
-
-add_test(NAME talloc_unit_tests_stats COMMAND talloc_unit_tests_status)
-add_test(NAME talloc_unit_tests_binary_tree COMMAND talloc_unit_tests_binary_tree)
 
 set(CPACK_PACKAGE_VENDOR "H Paterson")
 set(CPACK_PACKAGE_CONTACT "H Paterson <harley.paterson@postgrad.otago.ac.nz>")
