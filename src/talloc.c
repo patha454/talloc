@@ -42,6 +42,6 @@ tallocHash(const char* str)
 Reference
 tallocAlloc(TallocHash id, TallocHash type, size_t size)
 {
-  printf("talloc t: %llx; t: %llx; s: %zu\n", id, type, size);
+  printf("talloc id: %lx; type: %lx; size: %zu\n", id, type, size);
   return NULL;
 }
