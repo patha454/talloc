@@ -13,23 +13,17 @@
 #ifndef TALLOC_TALLOC_H_
 #define TALLOC_TALLOC_H_
 
+#include "talloc/reference.h"
+#include "talloc/hash.h"
 #include <stddef.h>
 #include <stdint.h>
 
-/** Reference to a memory object managed by talloc. */
-typedef struct TallocRef* Reference;
-
-/** Talloc type used to refer to types and objects. */
-typedef uint64_t TallocHash;
-
 /**
- * Construct a talloc hash from a string representing a unique object or type.
+ * Initialise talloc's internal state.
  *
- * \param str String to hash.
- * \return A hash of the string, used to access the object or type.
+ * \note `tallocInit()` must be called before any internal functions.
  */
-TallocHash
-tallocHash(const char* str);
+void tallocInit();
 
 /**
  * Allocate a new talloc tracked memory reference.
@@ -40,6 +34,13 @@ tallocHash(const char* str);
  */
 Reference
 tallocAlloc(TallocHash id, TallocHash type, size_t size);
+
+/**
+ * Call a function with each reference talloc is tracking.
+ *
+ * \param lambda A function to call with each reference.
+ */
+void tallocForEachRef(void (*lambda)(Reference));
 
 /**
  * Allocate a new tracked memory reference.

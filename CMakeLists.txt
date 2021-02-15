@@ -16,6 +16,9 @@ include(CPack)
 
 add_library(talloc SHARED
     ${PROJECT_SOURCE_DIR}/src/talloc.c
+    ${PROJECT_SOURCE_DIR}/src/ref-tree.c
+    ${PROJECT_SOURCE_DIR}/src/reference.c
+    ${PROJECT_SOURCE_DIR}/src/hash.c
 )
 
 target_include_directories(talloc PRIVATE include)
