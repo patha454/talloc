@@ -18,9 +18,9 @@ int
 main(void)
 {
   tallocInit();
-  Reference test = TALLOC("main.test", int);   /* NOLINT */
-  Reference test2 = TALLOC("main.test2", int); /* NOLINT */
-  Reference test3 = TALLOC("main.test3", long); /* NOLINT */
+  Reference test = TALLOC("main.test", int);
+  Reference test2 = TALLOC("main.test2", int);
+  Reference test3 = TALLOC("main.test3", long);
   TALLOC_DEREF(test, int) = 1;
   TALLOC_DEREF(test2, int) = 2;
   TALLOC_DEREF(test3, long) = 3;
