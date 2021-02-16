@@ -5,7 +5,7 @@
  * references based on the ID hash.
  *
  * \see `include/talloc/ref-tree.h` for detailed documentation comments and API
- * 
+ *
  * \author H Paterson <harley.paterson@postgrad.otago.ac.nz>
  * \copyright BSL-1.0
  * \date February 2021.
@@ -75,7 +75,7 @@ void tkRefTreeInsert(TkRefTree tree, Reference value)
         if (tree->left == NULL) {
             tree->left = tkRefTreeAlloc();
         }
-        tkRefTreeAlloc(tree->left, value);
+        tkRefTreeInsert(tree->left, value);
     }
 }
 
