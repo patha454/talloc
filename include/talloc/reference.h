@@ -27,7 +27,8 @@ typedef struct TallocRef* Reference;
  * \param type The type hash of the object to reference.
  * \param memory Pointer to the object being referenced.
  */
-Reference tkCreateReference(TallocHash id, TallocHash type, void* object);
+Reference
+tkCreateReference(TallocHash id, TallocHash type, void* object);
 
 /**
  * Destory and deallocate a reference.
@@ -38,7 +39,8 @@ Reference tkCreateReference(TallocHash id, TallocHash type, void* object);
  *
  * \param ref The reference to destroy.
  */
-void tkDestroyReference(Reference ref);
+void
+tkDestroyReference(Reference ref);
 
 /**
  * Get the type associated with a referenced object.
@@ -46,7 +48,8 @@ void tkDestroyReference(Reference ref);
  * \param ref The reference in question.
  * \return A hash of the reference's type.
  */
-TallocHash tkReferenceType(Reference ref);
+TallocHash
+tkReferenceType(Reference ref);
 
 /**
  * Get the Id associated with a a referenced object.
@@ -54,7 +57,8 @@ TallocHash tkReferenceType(Reference ref);
  * \param ref The reference in question.
  * \return A hash of the reference's ID.
  */
-TallocHash tkReferenceId(Reference ref);
+TallocHash
+tkReferenceId(Reference ref);
 
 /**
  * Get a pointer to an object associated with a reference.
@@ -62,6 +66,7 @@ TallocHash tkReferenceId(Reference ref);
  * \param ref The reference to read.
  * \return A pointer to the object tracked by the reference.
  */
-void* tkDereference(Reference ref);
+void*
+tkDereference(Reference ref);
 
 #endif

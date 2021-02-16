@@ -26,9 +26,10 @@ struct TallocRef
   void* object;
 };
 
-Reference tkCreateReference(TallocHash id, TallocHash type, void* object)
+Reference
+tkCreateReference(TallocHash id, TallocHash type, void* object)
 {
-  struct TallocRef* ref = malloc(sizeof (*ref));
+  struct TallocRef* ref = malloc(sizeof(*ref));
   if (ref == NULL) {
     perror("Allocating reference structure");
     exit(EXIT_FAILURE);
@@ -39,7 +40,8 @@ Reference tkCreateReference(TallocHash id, TallocHash type, void* object)
   return ref;
 }
 
-void tkDestroyReference(Reference ref)
+void
+tkDestroyReference(Reference ref)
 {
   assert(ref != NULL);
   ref->object = NULL;
@@ -48,19 +50,22 @@ void tkDestroyReference(Reference ref)
   free(ref);
 }
 
-TallocHash tkReferenceType(Reference ref)
+TallocHash
+tkReferenceType(Reference ref)
 {
   assert(ref != NULL);
   return ref->type;
 }
 
-TallocHash tkReferenceId(Reference ref)
+TallocHash
+tkReferenceId(Reference ref)
 {
   assert(ref != NULL);
   return ref->id;
 }
 
-void* tkDereference(Reference ref)
+void*
+tkDereference(Reference ref)
 {
   assert(ref != NULL);
   return ref->object;

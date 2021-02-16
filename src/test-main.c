@@ -4,13 +4,19 @@
 
 typedef struct TkRefTree* TkRefTree;
 
-void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
+void
+tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
 
-void printReference(Reference ref) {
-  printf("[Reference 0x%llx <0x%llx>]\n", tkReferenceId(ref), tkReferenceType(ref));
+void
+printReference(Reference ref)
+{
+  printf(
+    "[Reference 0x%llx <0x%llx>]\n", tkReferenceId(ref), tkReferenceType(ref));
 }
 
-void subractOneForLongRef(Reference ref) {
+void
+subractOneForLongRef(Reference ref)
+{
   TALLOC_DEREF(ref, long) = TALLOC_DEREF(ref, long) - 1;
 }
 

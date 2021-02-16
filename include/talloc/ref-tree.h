@@ -22,7 +22,8 @@ typedef struct TkRefTree* TkRefTree;
  *
  * \return The new talloc ref tree.
  */
-TkRefTree tkRefTreeAlloc();
+TkRefTree
+tkRefTreeAlloc();
 
 /**
  * Free and deallocate an existing ref tree.
@@ -33,7 +34,8 @@ TkRefTree tkRefTreeAlloc();
  *
  * \param tree The tree to insert into.
  */
-void tkRefTreeFree(TkRefTree tree);
+void
+tkRefTreeFree(TkRefTree tree);
 
 /**
  * Insert a reference into the tree.
@@ -41,7 +43,8 @@ void tkRefTreeFree(TkRefTree tree);
  * \param tree The tree to insert into.
  * \param value The value to insert.
  */
-void tkRefTreeInsert(TkRefTree tree, Reference value);
+void
+tkRefTreeInsert(TkRefTree tree, Reference value);
 
 /**
  * Iterate over every reference in the tree, calling a function with each
@@ -50,7 +53,8 @@ void tkRefTreeInsert(TkRefTree tree, Reference value);
  * \param tree The tree to iterate over.
  * \param lambda The function to call with each reference.
  */
-void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
+void
+tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
 
 /**
  * Iterate over every reference in the tree, calling a function for each instace
@@ -60,6 +64,9 @@ void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
  * \param lambda The function to call with the reference.
  * \param type The type to iterate over instaces of.
  */
-void tkRefTreeForEachInstance(TkRefTree tree, void (*lambda)(Reference), TallocHash type);
+void
+tkRefTreeForEachInstance(TkRefTree tree,
+                         void (*lambda)(Reference),
+                         TallocHash type);
 
 #endif

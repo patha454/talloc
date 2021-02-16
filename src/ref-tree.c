@@ -21,84 +21,91 @@
 /**
  * `struct TkRefTree` is a recursive binary tree storing talloc References.
  */
-struct TkRefTree {
-    Reference value;
+struct TkRefTree
+{
+  Reference value;
 
-    TkRefTree left;
+  TkRefTree left;
 
-    TkRefTree right;
+  TkRefTree right;
 };
 
-TkRefTree tkRefTreeAlloc()
+TkRefTree
+tkRefTreeAlloc()
 {
-    struct TkRefTree* tree = malloc(sizeof (*tree));
-    if (tree == NULL) {
-        perror("Allocating reference tree");
-        exit(EXIT_FAILURE);
-    }
-    tree->value = NULL;
-    tree->left = NULL;
-    tree->right = NULL;
-    return tree;
+  struct TkRefTree* tree = malloc(sizeof(*tree));
+  if (tree == NULL) {
+    perror("Allocating reference tree");
+    exit(EXIT_FAILURE);
+  }
+  tree->value = NULL;
+  tree->left = NULL;
+  tree->right = NULL;
+  return tree;
 }
 
 /* NOLINTNEXTLINE(misc-no-recursion) */
-void tkRefTreeFree(TkRefTree tree)
+void
+tkRefTreeFree(TkRefTree tree)
 {
-    if (tree == NULL) {
-        return;
-    }
-    tkRefTreeFree(tree->left);
-    tkRefTreeFree(tree->right);
-    free(tree);
+  if (tree == NULL) {
+    return;
+  }
+  tkRefTreeFree(tree->left);
+  tkRefTreeFree(tree->right);
+  free(tree);
 }
 
 /* NOLINTNEXTLINE(misc-no-recursion) */
-void tkRefTreeInsert(TkRefTree tree, Reference value)
+void
+tkRefTreeInsert(TkRefTree tree, Reference value)
 {
-    assert(tree != NULL);
-    unsigned int diff = 0;
-    if (tree->value == NULL) {
-        tree->value = value;
-        return;
+  assert(tree != NULL);
+  unsigned int diff = 0;
+  if (tree->value == NULL) {
+    tree->value = value;
+    return;
+  }
+  diff = tkReferenceId(tree->value) - tkReferenceId(value);
+  if (diff == 0) {
+    return;
+  }
+  if (diff < 0) {
+    if (tree->right == NULL) {
+      tree->right = tkRefTreeAlloc();
     }
-    diff = tkReferenceId(tree->value) - tkReferenceId(value);
-    if (diff == 0) {
-        return;
+    tkRefTreeInsert(tree->right, value);
+  } else {
+    if (tree->left == NULL) {
+      tree->left = tkRefTreeAlloc();
     }
-    if (diff < 0) {
-        if (tree->right == NULL) {
-            tree->right = tkRefTreeAlloc();
-        }
-        tkRefTreeInsert(tree->right, value);
-    }
-    else {
-        if (tree->left == NULL) {
-            tree->left = tkRefTreeAlloc();
-        }
-        tkRefTreeInsert(tree->left, value);
-    }
+    tkRefTreeInsert(tree->left, value);
+  }
 }
 
 /* NOLINTNEXTLINE(misc-no-recursion) */
-void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference))
+void
+tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference))
 {
-    if (tree == NULL || tree->value == NULL) {
-        return;
-    }
-    tkRefTreeForEach(tree->left, lambda);
+  if (tree == NULL || tree->value == NULL) {
+    return;
+  }
+  tkRefTreeForEach(tree->left, lambda);
+  lambda(tree->value);
+  tkRefTreeForEach(tree->right, lambda);
+}
+
+void
+tkRefTreeForEachInstance(TkRefTree tree,
+                         void (*lambda)(Reference),
+                         TallocHash type)
+{
+  if (tree == NULL || tree->value == NULL) {
+    return;
+  }
+  tkRefTreeForEach(tree->left, lambda);
+  if (tkReferenceType(tree->value) == type) {
     lambda(tree->value);
-    tkRefTreeForEach(tree->right, lambda);
-}
-
-void tkRefTreeForEachInstance(TkRefTree tree, void (*lambda)(Reference), TallocHash type)
-{
-    if (tree == NULL || tree->value == NULL) {
-        return;
-    }
-    tkRefTreeForEach(tree->left, lambda);
-    if(tkReferenceType(tree->value) == type) {
-      lambda(tree->value);
-    }
-    tkRefTreeForEach(tree->right, lambda);
+  }
+  tkRefTreeForEach(tree->right, lambda);
 }

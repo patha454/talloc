@@ -13,8 +13,8 @@
 #ifndef TALLOC_TALLOC_H_
 #define TALLOC_TALLOC_H_
 
-#include "talloc/reference.h"
 #include "talloc/hash.h"
+#include "talloc/reference.h"
 #include <stddef.h>
 #include <stdint.h>
 
@@ -23,7 +23,8 @@
  *
  * \note `tallocInit()` must be called before any internal functions.
  */
-void tallocInit();
+void
+tallocInit();
 
 /**
  * Allocate a new talloc tracked memory reference.
@@ -40,7 +41,8 @@ tallocAlloc(TallocHash id, TallocHash type, size_t size);
  *
  * \param lambda A function to call with each reference.
  */
-void tallocForEachRef(void (*lambda)(Reference));
+void
+tallocForEachRef(void (*lambda)(Reference));
 
 /**
  * Call a function for every with every instance of a type.
@@ -48,7 +50,8 @@ void tallocForEachRef(void (*lambda)(Reference));
  * \param lambda Function to call.
  * \param type Type to iterate over.
  */
-void tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
+void
+tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
 
 /**
  * Generate a talloc ID representing a data type.
@@ -74,6 +77,6 @@ void tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
  * \param type The type to get a pointer to.
  * \return A `type` pointer to `x`.
  */
-#define TALLOC_DEREF(x, type) (*(type*) tkDereference(x))
+#define TALLOC_DEREF(x, type) (*(type*)tkDereference(x))
 
 #endif

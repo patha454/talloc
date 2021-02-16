@@ -34,17 +34,20 @@ tallocAlloc(TallocHash id, TallocHash type, size_t size)
   return ref;
 }
 
-void tallocForEachRef(void (*lambda)(Reference))
+void
+tallocForEachRef(void (*lambda)(Reference))
 {
   tkRefTreeForEach(idTree, lambda);
 }
 
-void tallocForEachInstance(void (*lambda)(Reference), TallocHash type)
+void
+tallocForEachInstance(void (*lambda)(Reference), TallocHash type)
 {
   tkRefTreeForEachInstance(idTree, lambda, type);
 }
 
-void tallocInit()
+void
+tallocInit()
 {
   idTree = tkRefTreeAlloc();
 }
