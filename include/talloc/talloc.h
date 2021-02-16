@@ -43,6 +43,22 @@ tallocAlloc(TallocHash id, TallocHash type, size_t size);
 void tallocForEachRef(void (*lambda)(Reference));
 
 /**
+ * Call a function for every with every instance of a type.
+ *
+ * \param lambda Function to call.
+ * \param type Type to iterate over.
+ */
+void tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
+
+/**
+ * Generate a talloc ID representing a data type.
+ *
+ * \param type The type to encode.
+ * \return A talloc hash which acts as a unique type ID for `type`.
+ */
+#define TALLOC_TYPE(type) (tallocHash(#type))
+
+/**
  * Allocate a new tracked memory reference.
  *
  * \param id Unique string name for the memory object.

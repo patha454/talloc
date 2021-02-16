@@ -88,3 +88,15 @@ void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference))
     lambda(tree->value);
     tkRefTreeForEach(tree->right, lambda);
 }
+
+void tkRefTreeForEachInstance(TkRefTree tree, void (*lambda)(Reference), TallocHash type)
+{
+    if (tree == NULL || tree->value == NULL) {
+        return;
+    }
+    tkRefTreeForEach(tree->left, lambda);
+    if(tkReferenceType(tree->value) == type) {
+      lambda(tree->value);
+    }
+    tkRefTreeForEach(tree->right, lambda);
+}

@@ -52,4 +52,14 @@ void tkRefTreeInsert(TkRefTree tree, Reference value);
  */
 void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
 
+/**
+ * Iterate over every reference in the tree, calling a function for each instace
+ * of a type.
+ *
+ * \param tree The tree to iterate over.
+ * \param lambda The function to call with the reference.
+ * \param type The type to iterate over instaces of.
+ */
+void tkRefTreeForEachInstance(TkRefTree tree, void (*lambda)(Reference), TallocHash type);
+
 #endif
