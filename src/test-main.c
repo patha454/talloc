@@ -14,11 +14,11 @@ int
 main(void)
 {
   tallocInit();
-  Reference test = talloc("main.test", int);   /* NOLINT */
-  Reference test2 = talloc("main.test2", int); /* NOLINT */
-  tallocDeref(test, int) = 1;
-  tallocDeref(test2, int) = 2;
-  printf("1: %d, 2: %d\n", tallocDeref(test, int), tallocDeref(test2, int));
+  Reference test = TALLOC("main.test", int);   /* NOLINT */
+  Reference test2 = TALLOC("main.test2", int); /* NOLINT */
+  TALLOC_DEREF(test, int) = 1;
+  TALLOC_DEREF(test2, int) = 2;
+  printf("1: %d, 2: %d\n", TALLOC_DEREF(test, int), TALLOC_DEREF(test2, int));
   printReference(test2);
   tallocForEachRef(printReference);
   return EXIT_SUCCESS;

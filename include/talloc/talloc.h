@@ -48,7 +48,7 @@ void tallocForEachRef(void (*lambda)(Reference));
  * \param id Unique string name for the memory object.
  * \param type The type to allocate.
  */
-#define talloc(id, type)                                                       \
+#define TALLOC(id, type)                                                       \
   (tallocAlloc(tallocHash(id), tallocHash(#type), sizeof(type)))
 
 /**
@@ -58,6 +58,6 @@ void tallocForEachRef(void (*lambda)(Reference));
  * \param type The type to get a pointer to.
  * \return A `type` pointer to `x`.
  */
-#define tallocDeref(x, type) (*(type*) tkDereference(x))
+#define TALLOC_DEREF(x, type) (*(type*) tkDereference(x))
 
 #endif
