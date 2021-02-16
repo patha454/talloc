@@ -8,8 +8,8 @@
  * \date February 2021
  */
 
-#include <stddef.h>
 #include "talloc/hash.h"
+#include <stddef.h>
 
 /* `tallocHash` current uses the Jenkins one-at-a-time hash function. */
 TallocHash

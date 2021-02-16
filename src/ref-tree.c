@@ -11,12 +11,12 @@
  * \date February 2021.
  */
 
+#include "talloc/ref-tree.h"
 #include <assert.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "talloc/ref-tree.h"
 
 /**
  * `struct TkRefTree` is a recursive binary tree storing talloc References.
@@ -42,6 +42,7 @@ TkRefTree tkRefTreeAlloc()
     return tree;
 }
 
+/* NOLINTNEXTLINE(misc-no-recursion) */
 void tkRefTreeFree(TkRefTree tree)
 {
     if (tree == NULL) {
@@ -50,13 +51,13 @@ void tkRefTreeFree(TkRefTree tree)
     tkRefTreeFree(tree->left);
     tkRefTreeFree(tree->right);
     free(tree);
-    return;
 }
 
+/* NOLINTNEXTLINE(misc-no-recursion) */
 void tkRefTreeInsert(TkRefTree tree, Reference value)
 {
     assert(tree != NULL);
-    int diff = 0;
+    unsigned int diff = 0;
     if (tree->value == NULL) {
         tree->value = value;
         return;
@@ -79,6 +80,7 @@ void tkRefTreeInsert(TkRefTree tree, Reference value)
     }
 }
 
+/* NOLINTNEXTLINE(misc-no-recursion) */
 void tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference))
 {
     if (tree == NULL || tree->value == NULL) {

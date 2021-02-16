@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables) */
 static TkRefTree idTree;
 
 Reference
