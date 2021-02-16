@@ -61,7 +61,7 @@ void tkRefTreeInsert(TkRefTree tree, Reference value)
         tree->value = value;
         return;
     }
-    diff = tkReferenceType(tree->value) - tkReferenceType(value);
+    diff = tkReferenceId(tree->value) - tkReferenceId(value);
     if (diff == 0) {
         return;
     }

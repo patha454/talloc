@@ -25,7 +25,6 @@ main(void)
   TALLOC_DEREF(test2, int) = 2;
   TALLOC_DEREF(test3, long) = 3;
   printf("1: %d, 2: %d\n", TALLOC_DEREF(test, int), TALLOC_DEREF(test2, int));
-  printReference(test2);
   tallocForEachRef(printReference);
   tallocForEachInstance(subractOneForLongRef, TALLOC_TYPE(long));
   printf("3: %ld\n", TALLOC_DEREF(test3, long));
