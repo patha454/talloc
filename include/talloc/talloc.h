@@ -51,4 +51,13 @@ void tallocForEachRef(void (*lambda)(Reference));
 #define talloc(id, type)                                                       \
   (tallocAlloc(tallocHash(id), tallocHash(#type), sizeof(type)))
 
+/**
+ * Get the object a talloc reference tracks.
+ *
+ * \param x The talloc reference to read.
+ * \param type The type to get a pointer to.
+ * \return A `type` pointer to `x`.
+ */
+#define tallocDeref(x, type) (*(type*) tkDereference(x))
+
 #endif

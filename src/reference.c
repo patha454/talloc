@@ -59,3 +59,9 @@ TallocHash tkReferenceId(Reference ref)
   assert(ref != NULL);
   return ref->id;
 }
+
+void* tkDereference(Reference ref)
+{
+  assert(ref != NULL);
+  return ref->object;
+}

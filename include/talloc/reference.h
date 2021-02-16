@@ -56,4 +56,12 @@ TallocHash tkReferenceType(Reference ref);
  */
 TallocHash tkReferenceId(Reference ref);
 
+/**
+ * Get a pointer to an object associated with a reference.
+ *
+ * \param ref The reference to read.
+ * \return A pointer to the object tracked by the reference.
+ */
+void* tkDereference(Reference ref);
+
 #endif
