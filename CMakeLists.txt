@@ -35,7 +35,7 @@ target_compile_options(
 )
 
 add_executable(talloc_demo
-    ${PROJECT_SOURCE_DIR}/src/test-main.c
+    ${PROJECT_SOURCE_DIR}/src/evaluation/test-main.c
 )
 
 target_include_directories(talloc_demo PRIVATE include)
