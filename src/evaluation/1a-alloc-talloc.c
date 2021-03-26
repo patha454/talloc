@@ -29,7 +29,7 @@ main(int argc, char** argv)
     }
     for (i = 0; i < repetitions; i++)
     {
-        free(memory[i]);
+        // Actually mkae this free.
     }
     return EXIT_SUCCESS;
 }
