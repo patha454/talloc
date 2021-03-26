@@ -61,7 +61,7 @@ void
 tkRefTreeInsert(TkRefTree tree, Reference value)
 {
   assert(tree != NULL);
-  unsigned int diff = 0;
+  long diff = 0;
   if (tree->value == NULL) {
     tree->value = value;
     return;
