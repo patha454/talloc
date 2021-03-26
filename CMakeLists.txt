@@ -38,6 +38,10 @@ add_executable(talloc_demo
     ${PROJECT_SOURCE_DIR}/src/evaluation/test-main.c
 )
 
+add_executable(1a-alloc-normal
+    ${PROJECT_SOURCE_DIR}/src/evaluation/1a-alloc-normal.c
+)
+
 target_include_directories(talloc_demo PRIVATE include)
 
 target_link_libraries(talloc_demo talloc)
