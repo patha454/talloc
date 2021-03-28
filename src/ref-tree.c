@@ -57,30 +57,85 @@ tkRefTreeFree(TkRefTree tree)
 }
 
 /* NOLINTNEXTLINE(misc-no-recursion) */
-void
+TkRefTree
 tkRefTreeInsert(TkRefTree tree, Reference value)
 {
-  assert(tree != NULL);
+  assert(value != NULL);
   long diff = 0;
-  if (tree->value == NULL) {
+  if (tree == NULL)
+  {
+    tree = tkRefTreeAlloc();
     tree->value = value;
-    return;
+    return tree;
   }
   diff = tkReferenceId(tree->value) - tkReferenceId(value);
-  if (diff == 0) {
-    return;
+  if (diff == 0)
+  {
+    fprintf(stderr, "%s: An object with ID 0x%lx already exists and will be overwritten\n", __func__, tkReferenceId(value));
+    tree->value = value;
   }
-  if (diff < 0) {
-    if (tree->right == NULL) {
-      tree->right = tkRefTreeAlloc();
-    }
-    tkRefTreeInsert(tree->right, value);
-  } else {
-    if (tree->left == NULL) {
-      tree->left = tkRefTreeAlloc();
-    }
-    tkRefTreeInsert(tree->left, value);
+  else if (diff < 0) {
+    tree->right = tkRefTreeInsert(tree->right, value);
   }
+  else {
+    tree->left = tkRefTreeInsert(tree->left, value);
+  }
+  return tree;
+}
+
+TkRefTree
+tkRefTreeFindMin(TkRefTree tree)
+{
+  TkRefTree current_node = tree;
+  while (current_node->left) {
+    current_node = current_node->left;
+  }
+  return current_node;
+}
+
+/* NOLINTNEXTLINE(misc-no-recursion) */
+TkRefTree
+tkRefTreeDelete(TkRefTree tree, Reference value)
+{
+  if (tree == NULL)
+  {
+    return NULL;
+  }
+  TkRefTree temp = NULL;
+  long diff = (long) (tkReferenceId(tree->value) - tkReferenceId(value));
+  if (diff > 0)
+  {
+    tree->left = tkRefTreeDelete(tree->left, value);
+  }
+  else if (diff < 0)
+  {
+    tree->right = tkRefTreeDelete(tree->right, value);
+  }
+  else
+  {
+    if (tree->left == NULL && tree->right == NULL)
+    {
+      /*tkRefTreeFree(tree); */
+      tree = NULL;
+    }
+    else if (tree->left == NULL)
+    {
+      /* tkRefTreeFree(tree); */
+      tree = tree->right;
+    }
+    else if (tree->right == NULL)
+    {
+      /* tkRefTreeFree(tree); */
+      tree = tree->left;
+    }
+    else 
+    {
+      temp = tkRefTreeFindMin(tree->right);
+      tree->value = temp->value;
+      tree->right = tkRefTreeDelete(tree->right, temp->value);
+    }
+  }
+  return tree;
 }
 
 /* NOLINTNEXTLINE(misc-no-recursion) */

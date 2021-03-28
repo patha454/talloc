@@ -30,7 +30,7 @@ tallocAlloc(TallocHash id, TallocHash type, size_t size)
     exit(EXIT_FAILURE);
   }
   Reference ref = tkCreateReference(id, type, object);
-  tkRefTreeInsert(idTree, ref);
+  idTree = tkRefTreeInsert(idTree, ref);
   return ref;
 }
 
@@ -49,5 +49,13 @@ tallocForEachInstance(void (*lambda)(Reference), TallocHash type)
 void
 tallocInit()
 {
-  idTree = tkRefTreeAlloc();
+  idTree = NULL;
+}
+
+void
+tallocFree(Reference reference)
+{
+  idTree = tkRefTreeDelete(idTree, reference);
+  free(tkDereference(reference));
+  tkDestroyReference(reference);
 }

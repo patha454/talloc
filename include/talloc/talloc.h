@@ -79,4 +79,13 @@ tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
  */
 #define TALLOC_DEREF(x, type) (*(type*)tkDereference(x))
 
+/**
+ * Deallocate a talloc tracked reference, and the memory
+ * associated with it.
+ *
+ * \param reference The reference to deallocate.
+ */
+void
+tallocFree(Reference reference);
+
 #endif

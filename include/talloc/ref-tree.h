@@ -42,8 +42,9 @@ tkRefTreeFree(TkRefTree tree);
  *
  * \param tree The tree to insert into.
  * \param value The value to insert.
+ * \return An updated reference to `tree`.
  */
-void
+TkRefTree
 tkRefTreeInsert(TkRefTree tree, Reference value);
 
 /**
@@ -68,5 +69,15 @@ void
 tkRefTreeForEachInstance(TkRefTree tree,
                          void (*lambda)(Reference),
                          TallocHash type);
+
+/**
+ * Delete a reference from the reference tree.
+ *
+ * \param tree The tree to delete from.
+ * \param value The value to remove.
+ * \return An updated reference to the `tree`.
+ */
+TkRefTree
+tkRefTreeDelete(TkRefTree tree, Reference value);
 
 #endif
