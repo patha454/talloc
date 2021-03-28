@@ -1,5 +1,5 @@
-#include "talloc/talloc.h"
 #include "talloc/reference.h"
+#include "talloc/talloc.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,8 +11,9 @@ tkRefTreeForEach(TkRefTree tree, void (*lambda)(Reference));
 void
 printReference(Reference ref)
 {
-  printf(
-    "[Reference ID 0x%llx Type <0x%llx>]\n", tkReferenceId(ref), tkReferenceType(ref));
+  printf("[Reference ID 0x%llx Type <0x%llx>]\n",
+         tkReferenceId(ref),
+         tkReferenceType(ref));
 }
 
 void
@@ -21,7 +22,8 @@ subractOneForLongRef(Reference ref)
   TALLOC_DEREF(ref, long) = TALLOC_DEREF(ref, long) - 1;
 }
 
-void soleObjectTest()
+void
+soleObjectTest()
 {
   printf("Traverse (empty) tracking structure:\n");
   tallocForEachRef(printReference);
@@ -38,7 +40,8 @@ void soleObjectTest()
   printf("\n");
 }
 
-void childTest()
+void
+childTest()
 {
   printf("Allocating a two objects (left child)...\n");
   Reference testRoot = TALLOC("childTest.testRoot", int);
@@ -64,7 +67,8 @@ void childTest()
   printf("\n");
 }
 
-void complexTest()
+void
+complexTest()
 {
   printf("Allocating five objects...\n\n");
   Reference c = TALLOC("complexTest.c", int);

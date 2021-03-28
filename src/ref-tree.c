@@ -62,22 +62,22 @@ tkRefTreeInsert(TkRefTree tree, Reference value)
 {
   assert(value != NULL);
   long diff = 0;
-  if (tree == NULL)
-  {
+  if (tree == NULL) {
     tree = tkRefTreeAlloc();
     tree->value = value;
     return tree;
   }
   diff = tkReferenceId(tree->value) - tkReferenceId(value);
-  if (diff == 0)
-  {
-    fprintf(stderr, "%s: An object with ID 0x%lx already exists and will be overwritten\n", __func__, tkReferenceId(value));
+  if (diff == 0) {
+    fprintf(
+      stderr,
+      "%s: An object with ID 0x%lx already exists and will be overwritten\n",
+      __func__,
+      tkReferenceId(value));
     tree->value = value;
-  }
-  else if (diff < 0) {
+  } else if (diff < 0) {
     tree->right = tkRefTreeInsert(tree->right, value);
-  }
-  else {
+  } else {
     tree->left = tkRefTreeInsert(tree->left, value);
   }
   return tree;
@@ -97,39 +97,26 @@ tkRefTreeFindMin(TkRefTree tree)
 TkRefTree
 tkRefTreeDelete(TkRefTree tree, Reference value)
 {
-  if (tree == NULL)
-  {
+  if (tree == NULL) {
     return NULL;
   }
   TkRefTree temp = NULL;
-  long diff = (long) (tkReferenceId(tree->value) - tkReferenceId(value));
-  if (diff > 0)
-  {
+  long diff = (long)(tkReferenceId(tree->value) - tkReferenceId(value));
+  if (diff > 0) {
     tree->left = tkRefTreeDelete(tree->left, value);
-  }
-  else if (diff < 0)
-  {
+  } else if (diff < 0) {
     tree->right = tkRefTreeDelete(tree->right, value);
-  }
-  else
-  {
-    if (tree->left == NULL && tree->right == NULL)
-    {
+  } else {
+    if (tree->left == NULL && tree->right == NULL) {
       /*tkRefTreeFree(tree); */
       tree = NULL;
-    }
-    else if (tree->left == NULL)
-    {
+    } else if (tree->left == NULL) {
       /* tkRefTreeFree(tree); */
       tree = tree->right;
-    }
-    else if (tree->right == NULL)
-    {
+    } else if (tree->right == NULL) {
       /* tkRefTreeFree(tree); */
       tree = tree->left;
-    }
-    else 
-    {
+    } else {
       temp = tkRefTreeFindMin(tree->right);
       tree->value = temp->value;
       tree->right = tkRefTreeDelete(tree->right, temp->value);
