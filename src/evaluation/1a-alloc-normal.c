@@ -7,6 +7,10 @@ int
 main(int argc, char** argv)
 {
   int i = 0;
+  if (argc < 2) {
+    fprintf(stderr, "Usage requires a allocation count parameter.\n");
+    exit(EXIT_FAILURE);
+  }
   unsigned int repetitions = atoi(argv[1]);
   void** memory = calloc(repetitions, sizeof(*memory));
   if (memory == NULL) {
