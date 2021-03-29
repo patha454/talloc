@@ -4,32 +4,27 @@
 #include <stdlib.h>
 
 #define ALLOCATION_SIZE 4096
+#define REFERENCE_SIZE 1000000
 
 typedef uint8_t SOME_MEMORY[ALLOCATION_SIZE];
+typedef Reference SOME_REFERENCES[REFERENCE_SIZE];
 
 int
 main(int argc, char** argv)
 {
+  char label[32] = { 0 };
   int i = 0;
-  if (argc < 2) {
-    fprintf(stderr, "Usage requres an allocation count parameter.\n");
-    exit(EXIT_FAILURE);
-  }
-  unsigned int repetitions = atoi(argv[1]);
-  Reference* memory = calloc(repetitions, sizeof(*memory));
+  Reference memory = TALLOC("main.memory", SOME_REFERENCES);
   if (memory == NULL) {
     fprintf(stderr, "Failed to allocate buffer.");
     return EXIT_FAILURE;
   }
-  if (argc < 2) {
-    fprintf(stderr, "An iteration count must be provided as a parameter.");
-    return EXIT_FAILURE;
+  for (i = 0; i < REFERENCE_SIZE; i++) {
+    sprintf(label, "main.memory%d", i);
+    (TALLOC_DEREF(memory, SOME_REFERENCES))[i] = TALLOC(label, SOME_MEMORY);
   }
-  for (i = 0; i < repetitions; i++) {
-    memory[i] = TALLOC(itoa(i), SOME_MEMORY);
-  }
-  for (i = 0; i < repetitions; i++) {
-    tallocFree(memory[i]);
+  for (i = 0; i < REFERENCE_SIZE; i++) {
+    tallocFree((TALLOC_DEREF(memory, SOME_REFERENCES))[i]);
   }
   return EXIT_SUCCESS;
 }
