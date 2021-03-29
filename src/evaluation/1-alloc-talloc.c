@@ -29,7 +29,7 @@ main(int argc, char** argv)
     memory[i] = TALLOC(itoa(i), SOME_MEMORY);
   }
   for (i = 0; i < repetitions; i++) {
-    // Actually mkae this free.
+    tallocFree(memory[i]);
   }
   return EXIT_SUCCESS;
 }

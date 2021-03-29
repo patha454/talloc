@@ -38,13 +38,18 @@ add_executable(talloc_demo
     ${PROJECT_SOURCE_DIR}/src/evaluation/test-main.c
 )
 
-add_executable(1a-alloc-normal
-    ${PROJECT_SOURCE_DIR}/src/evaluation/1a-alloc-normal.c
+add_executable(1-alloc-normal
+    ${PROJECT_SOURCE_DIR}/src/evaluation/1-alloc-normal.c
+)
+add_executable(1-alloc-talloc
+    ${PROJECT_SOURCE_DIR}/src/evaluation/1-alloc-talloc.c
 )
 
 target_include_directories(talloc_demo PRIVATE include)
+target_include_directories(1-alloc-talloc PRIVATE include)
 
 target_link_libraries(talloc_demo talloc)
+target_link_libraries(1-alloc-talloc talloc)
 
 set(CPACK_PACKAGE_VENDOR "H Paterson")
 set(CPACK_PACKAGE_CONTACT "H Paterson <harley.paterson@postgrad.otago.ac.nz>")
