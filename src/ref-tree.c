@@ -73,7 +73,7 @@ tkRefTreeInsert(TkRefTree tree, Reference value)
       stderr,
       "%s: An object with ID 0x%lx already exists and will be overwritten\n",
       __func__,
-      tkReferenceId(value));
+      (unsigned long) tkReferenceId(value));
     tree->value = value;
   } else if (diff < 0) {
     tree->right = tkRefTreeInsert(tree->right, value);
