@@ -2,29 +2,21 @@
 #include <stdlib.h>
 
 #define ALLOCATION_SIZE 4096
+#define REFERENCE_SIZE 1000000
 
 int
 main(int argc, char** argv)
 {
   int i = 0;
-  if (argc < 2) {
-    fprintf(stderr, "Usage requires a allocation count parameter.\n");
-    exit(EXIT_FAILURE);
-  }
-  unsigned int repetitions = atoi(argv[1]);
-  void** memory = calloc(repetitions, sizeof(*memory));
+  void** memory = calloc(REFERENCE_SIZE, sizeof(*memory));
   if (memory == NULL) {
     fprintf(stderr, "Failed to allocate buffer.");
     return EXIT_FAILURE;
   }
-  if (argc < 2) {
-    fprintf(stderr, "An iteration count must be provided as a parameter.");
-    return EXIT_FAILURE;
-  }
-  for (i = 0; i < repetitions; i++) {
+  for (i = 0; i < REFERENCE_SIZE; i++) {
     memory[i] = malloc(ALLOCATION_SIZE);
   }
-  for (i = 0; i < repetitions; i++) {
+  for (i = 0; i < REFERENCE_SIZE; i++) {
     free(memory[i]);
   }
   return EXIT_SUCCESS;
