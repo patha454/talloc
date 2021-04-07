@@ -80,6 +80,14 @@ tallocForEachInstance(void (*lambda)(Reference), TallocHash type);
 #define TALLOC_DEREF(x, type) (*(type*)tkDereference(x))
 
 /**
+ * Replace the object tracked by a reference.
+ *
+ * \param ref The reference to update.
+ * \param newValue the new value to track.
+ */
+#define TALLOC_REF_UPDATE(ref, newValue) (tkReplaceValue(ref, newValue))
+
+/**
  * Deallocate a talloc tracked reference, and the memory
  * associated with it.
  *

@@ -69,4 +69,15 @@ tkReferenceId(Reference ref);
 void*
 tkDereference(Reference ref);
 
+/**
+ * Replace the object a reference tracks.
+ * 
+ * This will free the exisitng object being tracked.
+ *
+ * \param ref The reference to update.
+ * \param newValue The object to track in the reference.
+ */
+void
+tkReplaceValue(Reference ref, void* newValue);
+
 #endif

@@ -50,14 +50,19 @@ add_executable(2-access-normal
 add_executable(2-access-talloc
     ${PROJECT_SOURCE_DIR}/src/evaluation/2-access-talloc.c
 )
+add_executable(3-patch
+    ${PROJECT_SOURCE_DIR}/src/evaluation/3-patch.c
+)
 
-target_include_directories(talloc_demo PRIVATE include)
+target_include_directories(talloc_demo PUBLIC include)
 target_include_directories(1-alloc-talloc PRIVATE include)
 target_include_directories(2-access-talloc PRIVATE include)
+target_include_directories(3-patch PRIVATE include)
 
 target_link_libraries(talloc_demo talloc)
 target_link_libraries(1-alloc-talloc talloc)
 target_link_libraries(2-access-talloc talloc)
+target_link_libraries(3-patch talloc)
 
 set(CPACK_PACKAGE_VENDOR "H Paterson")
 set(CPACK_PACKAGE_CONTACT "H Paterson <harley.paterson@postgrad.otago.ac.nz>")

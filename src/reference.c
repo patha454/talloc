@@ -70,3 +70,10 @@ tkDereference(Reference ref)
   assert(ref != NULL);
   return ref->object;
 }
+
+void
+tkReplaceValue(Reference ref, void* newValue)
+{
+  free(ref->object);
+  ref->object = newValue;
+}
