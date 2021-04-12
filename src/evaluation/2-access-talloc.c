@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #define INT_COUNT 100000
-#define ACCESS_CYCLES 100
 
 typedef Reference access_buffer_t[INT_COUNT];
 
@@ -12,6 +11,7 @@ int
 main(int argc, char** argv)
 {
   char label[32] = { 0 };
+  int access_cycles = atoi(argv[1]);
   int i = 0;
   Reference memory = TALLOC("main.memory", access_buffer_t);
   if (memory == NULL) {
@@ -23,7 +23,7 @@ main(int argc, char** argv)
     sprintf(label, "main.memory%d", i);
     TALLOC_DEREF(memory, access_buffer_t)[i] = TALLOC(label, int);  	
   }
-  for (i = 0; i < ACCESS_CYCLES; i++)
+  for (i = 0; i < access_cycles; i++)
   {
     int index = rand() % INT_COUNT;
     Reference ir = (TALLOC_DEREF(memory, access_buffer_t))[index];
